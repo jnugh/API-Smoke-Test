@@ -1,10 +1,10 @@
 var should = require('should');
+var store = require('../src/test/testStore');
 
 process.env.CONFIG_FILE = './testcfg';
 process.env.STORE_DIR = './testStore';
 
 describe('testStore', function() {
-  var store = require('../src/test/testStore');
   beforeEach(function(done) {
     store.clear(done);
   });

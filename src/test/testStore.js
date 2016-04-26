@@ -124,7 +124,7 @@ module.exports = {
     fs.access(storePath + path.sep + saneFileName, fs.F_OK | fs.W_OK, write);
   },
 
-  read(key, cb) {
+  read: function(key, cb) {
     var me = this,
         storePath = me.getPath(),
         saneFileName = me.sanitizeFileName(key);
