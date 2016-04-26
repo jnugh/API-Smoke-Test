@@ -13,6 +13,7 @@
     "apiSmoke": "./src/index.js"
   },
   "dependencies": {
+    "colors": "^1.1.2",
     "commander": "^2.9.0",
     "homedir": "^0.6.0",
     "js-sha256": "^0.3.0",

@@ -33,12 +33,20 @@ module.exports = {
 
   addApi: function(api, cb) {
     this.fetchApi(api, function(data) {
-      store.add(api, data, cb);
+      store.add(api, {
+        api: api,
+        data: data
+      }, cb);
     });
   },
 
   getStoredResult: function(api, cb) {
-    store.read(api, cb);
+    store.read(api, function(err, data) {
+      if(err)
+        cb(err, data);
+      else
+        cb(err, data.data);
+    });
   },
 
   mergeResultData: function(d1, d2) {
@@ -156,18 +164,29 @@ module.exports = {
       }
       restored = data;
       if(fetched !== false && restored !== false) {
-        cb(me.doCompare(fetched, restored, ''));
+        cb(me.doCompare(fetched, restored, ''), api);
       }
     }
 
     var fetchCb = function(data) {
       fetched = data;
       if(fetched !== false && restored !== false) {
-        cb(me.doCompare(fetched, restored, ''));
+        cb(me.doCompare(fetched, restored, ''), api);
       }
     }
 
     this.getStoredResult(api, storedCb);
     this.fetchApi(api, fetchCb);
+  },
+
+  testAll: function(cb) {
+    var me = this;
+    store.forEach(function(err, data) {
+      if(err) {
+        console.err(err);
+      } else {
+        me.testApi(data.api, cb);
+      }
+    });
   }
 }

@@ -118,7 +118,7 @@ module.exports = {
           cb(err);
         });
       } else {
-        cb(err);
+        cb('File exists');
       }
     }
     fs.stat(storePath + path.sep + saneFileName, write);
@@ -161,6 +161,20 @@ module.exports = {
     me.remove(key, function() {
       me.add(key, data, cb);
     });
+  },
+
+  forEach: function(fn) {
+    var me = this,
+        storePath = me.getPath();
+
+      for(var i = 0; i < me.storeContent.length; i++) {
+        fs.readFile(storePath + path.sep + me.storeContent[i], function(err, data) {
+          if(!err) {
+            data = JSON.parse(data);
+          }
+          fn(err, data);
+        });
+      }
   }
 }
 
