@@ -121,7 +121,7 @@ module.exports = {
         cb(err);
       }
     }
-    fs.access(storePath + path.sep + saneFileName, fs.F_OK | fs.W_OK, write);
+    fs.stat(storePath + path.sep + saneFileName, write);
   },
 
   read: function(key, cb) {
