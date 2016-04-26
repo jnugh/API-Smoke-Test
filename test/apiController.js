@@ -1,3 +1,6 @@
+process.env.CONFIG_FILE = './testcfg';
+process.env.STORE_DIR = './testStore';
+
 var should = require('should'),
     controller = require('../src/apis/apiController'),
     store = require('../src/apis/apiStore'),

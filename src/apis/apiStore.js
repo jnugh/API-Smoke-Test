@@ -4,6 +4,7 @@ var fs = require('fs')
 
 module.exports = {
   getPath: function() {
+    console.log(process.env.STORE_DIR);
     return process.env.STORE_DIR || require('homedir')() + path.sep + '.salSmokeStore';
   },
 
@@ -52,7 +53,7 @@ module.exports = {
         storePath = me.getPath();
 
     try {
-      fs.mkdirSync(storePath)
+      fs.mkdirSync(storePath);
     } catch(e) {
       if(e.code != 'EEXIST')
         throw e;
