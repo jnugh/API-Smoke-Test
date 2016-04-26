@@ -90,5 +90,13 @@ describe('testStore', function() {
         done();
       });
     });
-  })
+  });
+
+  it('should finish silently when deleting something, which doe snot exist', function(done) {
+    var oldSize = store.size();
+    store.remove('testData#', function() {
+      store.size().should.equal(oldSize);
+      done();
+    });
+  });
 })
