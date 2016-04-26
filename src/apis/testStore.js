@@ -121,7 +121,7 @@ module.exports = {
         cb(err);
       }
     }
-    fs.stat(storePath + path.sep + saneFileName, write);
+    fs.access(storePath + path.sep + saneFileName, fs.F_OK | fs.W_OK, write);
   },
 
   read: function(key, cb) {
@@ -143,16 +143,26 @@ module.exports = {
         saneFileName = me.sanitizeFileName(key),
         index = me.storeContent.indexOf(saneFileName);
 
-    if(index === -1) {
-      return cb();
-    }
-
     if(typeof cb === 'undefined') {
       cb = function(){};
     }
 
+    if(index === -1) {
+      return cb();
+    }
+
+
+
     fs.unlink(storePath + path.sep + saneFileName, cb);
     me.storeContent.splice(index, 1);
+  },
+
+  update: function(key, data, cb) {
+    var me = this;
+
+    me.remove(key, function() {
+      me.add(key, data, cb);
+    });
   }
 }
 
