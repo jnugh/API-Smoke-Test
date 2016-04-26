@@ -23,7 +23,7 @@ module.exports = {
   sync: function() {
     var me = this;
     if(me.writing) {
-      setTimeout(me.sync, 100);
+      setTimeout(me.sync.bind(me), 100);
       return;
     }
     me.writing = true;
