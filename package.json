@@ -4,7 +4,8 @@
   "description": "Tool to ensure integrity on api calls",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha test/*.js"
+    "test": "mocha",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "author": "Jonas Schwabe",
   "license": "ISC",
@@ -17,7 +18,9 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
+    "coveralls": "^2.11.9",
     "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.2.0",
     "should": "^8.3.1"
   }
 }
