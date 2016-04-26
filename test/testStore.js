@@ -1,5 +1,5 @@
 var should = require('should');
-var store = require('../src/test/testStore');
+var store = require('../src/apis/testStore');
 
 process.env.CONFIG_FILE = './testcfg';
 process.env.STORE_DIR = './testStore';
