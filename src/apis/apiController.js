@@ -162,7 +162,6 @@ module.exports = {
 
     switch(type) {
       case 'object':
-        console.log(old);
         if(Array.isArray(newData)) {
           return me.traverseCompareArray(newData, old, path);
         } else {
