@@ -4,7 +4,7 @@ var fs = require('fs')
 
 module.exports = {
   getPath: function() {
-    return process.env.STORE_DIR || require('homedir')() + path.sep + '.salSmokeStore';
+    return process.env.STORE_DIR || './salSmokeStore';
   },
 
   clear: function(cb) {
