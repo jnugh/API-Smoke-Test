@@ -26,8 +26,8 @@ module.exports = {
         try{
           cb(JSON.parse(body));
         } catch(e) {
-          console.log('could not parse:', body);
-          process.exitCode = 1;
+          console.log('could not parse:', body, e);
+          throw e;
         }
       });
     } else {
@@ -139,6 +139,13 @@ module.exports = {
         oldType = typeof old;
         newType = typeof newData;
 
+    if(old === null) {
+      oldType = 'null';
+    }
+    if(newData === null) {
+      newType = 'null';
+    }
+
     if(oldType !== newType) {
       return [{
         severity: 'breaking',
@@ -155,6 +162,7 @@ module.exports = {
 
     switch(type) {
       case 'object':
+        console.log(old);
         if(Array.isArray(newData)) {
           return me.traverseCompareArray(newData, old, path);
         } else {
