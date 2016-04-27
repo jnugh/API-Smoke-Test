@@ -18,17 +18,36 @@ module.exports = {
       path: '/' + api
     };
 
-    http.get(options, function(res) {
-      var body = '';
-      res.on('data', function(chunk) {
-        body += chunk;
+    if(config.getCurlOptions()) {
+      var curl = require('curlrequest');
+      var curlOptions = config.getCurlOptions();
+      curlOptions.url = options.host + ':' + options.port + options.path;
+      curl.request(curlOptions, function (err, body) {
+        try{
+          cb(JSON.parse(body));
+        } catch(e) {
+          console.log('could not parse:', body);
+          process.exitCode = 1;
+        }
       });
-      res.on('end', function() {
-        cb(JSON.parse(body));
+    } else {
+      http.get(options, function(res) {
+        var body = '';
+        res.on('data', function(chunk) {
+          body += chunk;
+        });
+        res.on('end', function() {
+          try{
+            cb(JSON.parse(body));
+          } catch(e) {
+            console.log('could not parse:', body);
+            process.exitCode = 1;
+          }
+        });
+      }).on('error', function(e) {
+        throw 'Fetch failed: ' + e.message;
       });
-    }).on('error', function(e) {
-      throw 'Fetch failed: ' + e.message;
-    });
+    }
   },
 
   addApi: function(api, cb) {

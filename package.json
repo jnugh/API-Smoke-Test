@@ -1,6 +1,6 @@
 {
   "name": "api-smoke-test",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Tool to ensure integrity on api calls",
   "main": "src/index.js",
   "scripts": {
@@ -15,6 +15,7 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "curlrequest": "^0.5.7",
     "homedir": "^0.6.0",
     "js-sha256": "^0.3.0",
     "valid-url": "^1.0.9"

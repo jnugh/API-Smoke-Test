@@ -43,7 +43,7 @@ module.exports = {
   },
 
   getPath: function() {
-    return process.env.CONFIG_FILE || './salSmokeConf';
+    return process.env.CONFIG_FILE || require('homedir')() + path.sep + '.salSmokeConf';
   },
 
   ensureConfig: function(path) {
@@ -53,6 +53,10 @@ module.exports = {
       return false;
     }
     return true;
+  },
+
+  getCurlOptions: function() {
+    return this.config.curlOptions;
   }
 };
 
