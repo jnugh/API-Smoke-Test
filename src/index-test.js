@@ -21,14 +21,16 @@ var testCb = function(result, apiCall) {
           process.exitCode = 1;
           console.log('Breaking API change:'.underline.red);
           break;
+        default:
+          console.log('Unkown severity'.underline.red);
       }
-    }
-    console.log(info.type + ': (' + info.path + ')');
-    console.log('old type: ' + info.oldType);
-    console.log('new type: ' + info.newType)
-    if(program.verbose) {
-      console.log('old data: ', info.oldData);
-      console.log('new data: ', info.newData);
+      console.log(info.type + ': (' + info.path + ')');
+      console.log('old type: ' + info.oldType);
+      console.log('new type: ' + info.newType)
+      if(program.verbose) {
+        console.log('old data: ', info.oldData);
+        console.log('new data: ', info.newData);
+      }
     }
   }
 }
