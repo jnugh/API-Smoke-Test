@@ -1,6 +1,6 @@
 {
   "name": "api-smoke-test",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "description": "Tool to ensure integrity on api calls",
   "main": "src/index.js",
   "scripts": {
