@@ -43,7 +43,7 @@ module.exports = {
   },
 
   getPath: function() {
-    return process.env.CONFIG_FILE || require('homedir')() + path.sep + '.salSmokeConf';
+    return process.env.SMOKE_CONFIG_FILE || require('homedir')() + path.sep + '.salSmokeConf';
   },
 
   ensureConfig: function(path) {

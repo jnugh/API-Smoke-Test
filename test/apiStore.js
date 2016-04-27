@@ -1,7 +1,7 @@
 var should = require('should');
 var store = require('../src/apis/apiStore');
 
-process.env.CONFIG_FILE = './testcfg';
+process.env.SMOKE_CONFIG_FILE = './testcfg';
 process.env.STORE_DIR = './testStore';
 
 describe('API Store', function() {

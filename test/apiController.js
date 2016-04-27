@@ -1,4 +1,4 @@
-process.env.CONFIG_FILE = './testcfg';
+process.env.SMOKE_CONFIG_FILE = './testcfg';
 process.env.STORE_DIR = './testStore';
 
 var should = require('should'),
