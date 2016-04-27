@@ -5,9 +5,7 @@ var program = require('commander'),
 
 var testCb = function(result, apiCall) {
   console.log('Test results for ' + apiCall.bold);
-  if(result === true) {
-    process.exit(0);
-  } else {
+  if(result !== true) {
     for(var i = 0; i < result.length; i++) {
       var info = result[i];
       switch(info.severity) {
