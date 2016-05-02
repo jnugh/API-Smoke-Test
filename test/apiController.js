@@ -9,6 +9,29 @@ var should = require('should'),
     nock = require('nock');
 
 describe('API Controller', function(){
+
+  describe('Result merging', function() {
+    it('should merge two arrays', function() {
+      controller.mergeResultData(['val1', 'val2'], ['val3', 'val4'])
+        .should.deepEqual(['val1', 'val2', 'val3', 'val4']);
+    });
+
+    it('should return the first array when the other input is true', function() {
+      controller.mergeResultData(['val1', 'val2'], true)
+        .should.deepEqual(['val1', 'val2']);
+    });
+
+    it('should return the second array when the other input is true', function() {
+      controller.mergeResultData(true, ['val1', 'val2'])
+        .should.deepEqual(['val1', 'val2']);
+    });
+
+    it('should return true when both inputs are true', function() {
+      controller.mergeResultData(true, true)
+        .should.equal(true);
+    });
+  });
+
   describe('valid data', function() {
     var apiData = {
       root: [{
@@ -54,13 +77,15 @@ describe('API Controller', function(){
     var apiData = {
       root: [{
         'this': 'is',
-        data: true
+        data: true,
+        more: null
       }]
     },
     apiData2 = {
       root: [{
         'this': 'was',
-        data: false
+        data: false,
+        more: null
       }]
     };;
 
@@ -260,7 +285,7 @@ describe('API Controller', function(){
         'this': 'is',
         data: true
       }]
-    };;
+    };
 
 
     beforeEach(function(done) {
@@ -292,6 +317,51 @@ describe('API Controller', function(){
         }
         done();
       });
+    });
+
+    afterEach(function() {
+      nock.cleanAll();
+    });
+  });
+
+  describe('invalid api data', function() {
+    var apiData = {
+      root: [{
+        'this': 'is',
+        data: true,
+        more: 'data'
+      }]
+    };
+
+
+    beforeEach(function(done) {
+      config.setUrl('http://localhost:1234');
+
+      nock('http://localhost:1234')
+        .get('/test')
+        .socketDelay(2000) // 2 seconds
+        .reply(200, JSON.stringify(apiData));
+
+      store.clear(function() {
+        controller.addApi('test', function() {
+          nock.cleanAll();
+          nock('http://localhost:1234')
+            .get('/test')
+            .socketDelay(2000) // 2 seconds
+            .reply(200, 'INVALID JSON');
+          done();
+        });
+      });
+    });
+
+    it('should fail the execution', function(done) {
+      controller.testApi('test', function(result) {
+
+      });
+      setTimeout(function() {
+        process.exitCode.should.not.equal(0);
+        done();
+      }, 100);
     });
 
     afterEach(function() {

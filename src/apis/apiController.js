@@ -26,7 +26,7 @@ module.exports = {
         try{
           cb(JSON.parse(body));
         } catch(e) {
-          console.log('could not parse:', body, e);
+          console.error('could not parse:', body, e);
           throw e;
         }
       });
@@ -161,15 +161,13 @@ module.exports = {
     var type = oldType;
 
     switch(type) {
+      case 'array':
       case 'object':
         if(Array.isArray(newData)) {
           return me.traverseCompareArray(newData, old, path);
         } else {
           return me.traverseCompareObject(newData, old, path);
         }
-      break;
-      case 'array':
-        return me.traverseCompareArray(newData, old, path);
       break;
       default:
       return true;
